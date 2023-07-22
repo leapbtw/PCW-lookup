@@ -12,4 +12,5 @@ COME INSTALLARE L'ESTENSIONE:
 3. attivare modalita sviluppatore (developer)
 4. cliccare Load Unpacked (non pacchettizzata)
 5. selezionare la cartella con il source code
-6. profit
+6. configurare l'estensione
+7. profit
