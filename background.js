@@ -41,24 +41,44 @@ const fetchPokemonNames = () => {
     validPokemonNames = names;
   });
   
-  chrome.webNavigation.onBeforeNavigate.addListener((details) => {
-    const query = getParameterByName("q", details.url);
-    if (query) {
-      if (query.toLowerCase().startsWith("pcw ")) {
-        const searchTerm = query.substring(4).trim(); // Rimuovi "pcw " dal termine di ricerca
-        if (searchTerm) {
-          const wikiURL = `https://wiki.pokemoncentral.it/index.php?search=${encodeURIComponent(searchTerm)}`;
-          chrome.tabs.update({ url: wikiURL });
-        }
-      } else {
-        const closestName = getClosestPokemonName(query);
+  // background.js
+
+// ... (Il codice rimanente è lo stesso)
+
+chrome.webNavigation.onBeforeNavigate.addListener((details) => {
+  const pokemonName = getParameterByName("q", details.url);
+  if (pokemonName) {
+    chrome.storage.sync.get(['automaticRedirection', 'pcwRedirection'], function(result) {
+      const automaticRedirection = result.automaticRedirection ?? false;
+      const pcwRedirection = result.pcwRedirection ?? false;
+
+      if (automaticRedirection && !pokemonName.startsWith("pcw ")) {
+        const closestName = getClosestPokemonName(pokemonName);
         if (closestName) {
-          const wikiURL = `https://wiki.pokemoncentral.it/${closestName}`;
+          let wikiURL = `https://wiki.pokemoncentral.it/${closestName}`;
+          if (pokemonName.toLowerCase() === closestName.toLowerCase()) {
+            wikiURL = `https://wiki.pokemoncentral.it/${encodeURIComponent(pokemonName)}`;
+          }
           chrome.tabs.update({ url: wikiURL });
         }
       }
-    }
-  });
+
+      if (pcwRedirection && pokemonName.startsWith("pcw ")) {
+        const searchTerm = encodeURIComponent(pokemonName.slice(4));
+        const wikiURL = `https://wiki.pokemoncentral.it/index.php?search=${searchTerm}`;
+        chrome.tabs.update({ url: wikiURL });
+      }
+    });
+  }
+});
+
+
+
+
+
+// ... (Il codice rimanente è lo stesso)
+
+  
   
   
   function getParameterByName(name, url) {

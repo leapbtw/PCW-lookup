@@ -1,11 +1,28 @@
+<!-- popup.html -->
+
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Pokemon Central Wiki</title>
+  <style>
+    body {
+      min-width: 300px;
+      min-height: 200px;
+      padding: 20px;
+    }
+  </style>
 </head>
 <body>
-    <h1>
-        Hello World!
-    </h1>
+  <h3>Impostazioni</h3>
+  <label>
+    <input type="checkbox" id="automaticPokemonRedirection" checked> Reindirizzamento automatico <br> esempio: "Pikachu" -> https://wiki.pokemoncentral.it/Pikachu
+  </label>
+  <br>
+  <br>
+  <br>
+  <label>
+    <input type="checkbox" id="pcwRedirection"> Ricerca con prefisso "pcw" <br> esempio: "pcw Fuocobomba" -> https://wiki.pokemoncentral.it/Fuocobomba
+  </label>
+
+  <script src="popup.js"></script>
 </body>
 </html>

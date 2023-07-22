@@ -3,7 +3,7 @@
     "name": "Pokemon Central Wiki Redirect",
     "version": "1.0",
     "description": "Redirects Pokemon names to Pokemon Central Wiki",
-    "permissions": ["webNavigation"],
+    "permissions": ["webNavigation", "storage"],
     "background": {
       "service_worker": "background.js"
     },
